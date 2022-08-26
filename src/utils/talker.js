@@ -11,6 +11,20 @@ const readTalkerFile = async () => {
   }
 };
 
+const talkerById = async (id) => {
+  const talkers = await readTalkerFile();
+  let talker;
+
+  talkers.forEach((tal) => {
+    if (tal.id === Number(id)) {
+      talker = tal;
+    }
+  });
+  
+  return talker;
+};
+
 module.exports = {
   readTalkerFile,
+  talkerById,
 };
