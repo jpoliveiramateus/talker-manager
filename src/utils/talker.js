@@ -61,9 +61,23 @@ const editTalkerById = async (id, talker) => {
   return null;
 };
 
+const removeTalkerById = async (id) => {
+  const talkers = await readTalkerFile();
+  const findTalker = talkers.find((tal) => tal.id === Number(id));
+
+  if (findTalker) {
+    const talkersFiltered = talkers.filter((tal) => tal.id !== Number(id));
+    await writeTalkerFile(talkersFiltered);
+    return true;
+  }
+
+  return false;
+};
+
 module.exports = {
   readTalkerFile,
   talkerById,
   insertTalkerFile,
   editTalkerById,
+  removeTalkerById,
 };

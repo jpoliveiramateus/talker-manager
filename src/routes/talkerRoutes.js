@@ -37,4 +37,11 @@ validateTalk, validateWatchedAtAndRate, async (req, res) => {
     .json(!editedTalkerById ? { message: 'Id não encontrado!' } : editedTalkerById);
 });
 
+router.delete('/:id', auth, async (req, res) => {
+  const { id } = req.params;
+  const removeTalkerById = await talker.removeTalkerById(id);
+  res.status(removeTalkerById ? 204 : 404)
+    .json(removeTalkerById && { message: 'Id não encontrado!' });
+});
+
 module.exports = router;
