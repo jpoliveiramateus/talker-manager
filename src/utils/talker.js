@@ -11,6 +11,15 @@ const readTalkerFile = async () => {
   }
 };
 
+const writeTalkerFile = async (content) => {
+  const path = '../talker.json';
+  try {
+    await fs.writeFile(join(__dirname, path), JSON.stringify(content));
+  } catch (error) {
+    return console.error('Erro ao escrever arquivo:', error.path);
+  }
+};
+
 const talkerById = async (id) => {
   const talkers = await readTalkerFile();
   let talker;
@@ -24,7 +33,20 @@ const talkerById = async (id) => {
   return talker;
 };
 
+const insertTalkerFile = async (talker) => {
+  const talkers = await readTalkerFile();
+  const id = talkers.length + 1;
+  const insertTalker = {
+    id,
+    ...talker,
+  };
+  talkers.push(insertTalker);
+  await writeTalkerFile(talkers);
+  return insertTalker;
+};
+
 module.exports = {
   readTalkerFile,
   talkerById,
+  insertTalkerFile,
 };
