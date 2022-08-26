@@ -45,8 +45,25 @@ const insertTalkerFile = async (talker) => {
   return insertTalker;
 };
 
+const editTalkerById = async (id, talker) => {
+  const talkers = await readTalkerFile();
+
+  const findTalker = talkers.find((tal) => tal.id === Number(id));
+  findTalker.name = talker.name;
+  findTalker.age = talker.age;
+  findTalker.talk = talker.talk;
+
+  if (findTalker) {
+    await writeTalkerFile(talkers);
+    return findTalker;
+  }
+
+  return null;
+};
+
 module.exports = {
   readTalkerFile,
   talkerById,
   insertTalkerFile,
+  editTalkerById,
 };

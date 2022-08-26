@@ -29,4 +29,12 @@ router.get('/:id', validateTalker, async (req, res) => {
   res.status(200).json(talkerById);
 });
 
+router.put('/:id', auth, validateName, validateAge,
+validateTalk, validateWatchedAtAndRate, async (req, res) => {
+  const { id } = req.params;
+  const editedTalkerById = await talker.editTalkerById(id, req.body);
+  res.status(!editedTalkerById ? 404 : 200)
+    .json(!editedTalkerById ? { message: 'Id não encontrado!' } : editedTalkerById);
+});
+
 module.exports = router;
