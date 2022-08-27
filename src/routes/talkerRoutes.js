@@ -23,6 +23,13 @@ router.post('/', auth, validateName, validateAge,
   res.status(201).json(insertTalker);
 });
 
+router.get('/search', auth, async (req, res) => {
+  const { q } = req.query;
+  const searchByQuery = await talker.searchByQuery(q);
+  console.log(searchByQuery);
+  res.status(200).json(searchByQuery);
+});
+
 router.get('/:id', validateTalker, async (req, res) => {
   const { id } = req.params;
   const talkerById = await talker.talkerById(id);

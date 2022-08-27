@@ -74,10 +74,25 @@ const removeTalkerById = async (id) => {
   return false;
 };
 
+const searchByQuery = async (query) => {
+  const talkers = await readTalkerFile();
+  if (query) {
+    const talkersFiltered = talkers
+      .filter((tal) => tal.name.toLowerCase().includes(query.toLowerCase()));
+    if (talkersFiltered.length > 0) {
+      return talkersFiltered;
+    }
+    return [];
+  }
+
+  return talkers;
+};
+
 module.exports = {
   readTalkerFile,
   talkerById,
   insertTalkerFile,
   editTalkerById,
   removeTalkerById,
+  searchByQuery,
 };
